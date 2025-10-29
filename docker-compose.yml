@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped
+    networks:
+      - ai_network
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=false
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678
+      - GENERIC_TIMEZONE=UTC
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=n8n_password
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/home/node/.n8n/workflows
+    depends_on:
+      - postgres
+      - ollama
+    restart: unless-stopped
+    networks:
+      - ai_network
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=n8n
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - ai_network
+
+  backend:
+    build: ./backend
+    container_name: ai_backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://backend_user:backend_password@postgres_backend:5432/ai_app
+      - N8N_WEBHOOK_URL=http://n8n:5678/webhook
+    depends_on:
+      - postgres_backend
+    restart: unless-stopped
+    networks:
+      - ai_network
+
+  postgres_backend:
+    image: postgres:13
+    container_name: postgres_backend
+    environment:
+      - POSTGRES_DB=ai_app
+      - POSTGRES_USER=backend_user
+      - POSTGRES_PASSWORD=backend_password
+    volumes:
+      - postgres_backend_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    networks:
+      - ai_network
+
+  frontend:
+    build: ./frontend
+    container_name: ai_frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - ai_network
+
+volumes:
+  ollama_data:
+  n8n_data:
+  postgres_data:
+  postgres_backend_data:
+
+networks:
+  ai_network:
+    driver: bridge

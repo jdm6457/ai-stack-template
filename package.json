@@ -1,0 +1,39 @@
+{
+    "name": "ai-stack-template",
+    "version": "1.0.0",
+    "description": "Complete AI development stack with Ollama, n8n, React frontend, and Node.js backend",
+    "main": "install.sh",
+    "scripts": {
+      "setup": "./install.sh",
+      "start": "./quick-start.sh",
+      "dev": "docker-compose up -d && ./scripts/setup-ollama.sh",
+      "stop": "docker-compose down",
+      "clean": "./manage.sh clean",
+      "reset": "./manage.sh reset",
+      "logs": "docker-compose logs -f",
+      "status": "./manage.sh status",
+      "models": "./manage.sh models list",
+      "backup": "./manage.sh backup"
+    },
+    "keywords": [
+      "ai",
+      "llm",
+      "ollama",
+      "n8n",
+      "react",
+      "nodejs",
+      "docker",
+      "self-hosted",
+      "template"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/yourusername/ai-stack-template.git"
+    },
+    "engines": {
+      "node": ">=18.0.0",
+      "docker": ">=20.0.0"
+    }
+  }

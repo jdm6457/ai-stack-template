@@ -1,0 +1,287 @@
+# AI Stack Template .gitignore
+
+# ===================
+# DEPLOYMENT ARTIFACTS
+# ===================
+# Generated project structure (created by install.sh)
+backend/
+frontend/
+n8n/
+scripts/
+
+# Environment and config files with secrets
+.env
+.env.local
+.env.production
+
+# ===================
+# DOCKER & CONTAINERS
+# ===================
+# Docker volumes and data
+docker-compose.override.yml
+.docker/
+
+# ===================
+# DATABASE & BACKUPS
+# ===================
+# Backup directories
+backups/
+*.sql
+*.dump
+
+# Database data directories
+postgres_data/
+n8n_data/
+ollama_data/
+
+# ===================
+# LOGS & MONITORING
+# ===================
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===================
+# NODE.JS
+# ===================
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# ===================
+# REACT BUILD OUTPUT
+# ===================
+# Production build
+build/
+dist/
+
+# Static files
+.cache/
+
+# ===================
+# DEVELOPMENT FILES
+# ===================
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===================
+# AI MODELS & DATA
+# ===================
+# Large model files (Ollama stores these in volumes)
+*.bin
+*.gguf
+models/
+model_cache/
+
+# ===================
+# CERTIFICATES & KEYS
+# ===================
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# API keys and secrets
+secrets/
+credentials/
+
+# ===================
+# TEMPORARY FILES
+# ===================
+# Temporary directories
+tmp/
+temp/
+.tmp/
+
+# Cache directories
+.cache/
+.npm/
+.yarn-cache/
+
+# ===================
+# TESTING
+# ===================
+# Test results
+test-results/
+coverage/
+
+# ===================
+# CUSTOM CONFIGURATIONS
+# ===================# AI Stack Template .gitignore
+
+# ===================
+# DEPLOYMENT ARTIFACTS
+# ===================
+# Generated project structure (created by install.sh)
+backend/
+frontend/
+n8n/
+scripts/
+
+# Environment and config files with secrets
+.env
+.env.local
+.env.production
+
+# ===================
+# DOCKER & CONTAINERS
+# ===================
+# Docker volumes and data
+docker-compose.override.yml
+.docker/
+
+# ===================
+# DATABASE & BACKUPS
+# ===================
+# Backup directories
+backups/
+*.sql
+*.dump
+
+# Database data directories
+postgres_data/
+n8n_data/
+ollama_data/
+
+# ===================
+# LOGS & MONITORING
+# ===================
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===================
+# NODE.JS
+# ===================
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# ===================
+# REACT BUILD OUTPUT
+# ===================
+# Production build
+build/
+dist/
+
+# Static files
+.cache/
+
+# ===================
+# DEVELOPMENT FILES
+# ===================
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===================
+# AI MODELS & DATA
+# ===================
+# Large model files (Ollama stores these in volumes)
+*.bin
+*.gguf
+models/
+model_cache/
+
+# ===================
+# CERTIFICATES & KEYS
+# ===================
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# API keys and secrets
+secrets/
+credentials/
+
+# ===================
+# TEMPORARY FILES
+# ===================
+# Temporary directories
+tmp/
+temp/
+.tmp/
+
+# Cache directories
+.cache/
+.npm/
+.yarn-cache/
+
+# ===================
+# TESTING
+# ===================
+# Test results
+test-results/
+coverage/
+
+# ===================
+# CUSTOM CONFIGURATIONS
+# ===================
+# User-specific configurations
+config.local.js
+config.local
+# User-specific configurations
+config.local.js
+config.local
