@@ -1,5 +1,5 @@
 {
-  "name": "n8n-workflow-chat",
+  "name": "My workflow",
   "nodes": [
     {
       "parameters": {
@@ -14,14 +14,14 @@
         0,
         0
       ],
-      "id": "9b7f7b59-8dbd-4c1b-b058-302126083371",
+      "id": "9a6a1809-3af9-42d2-9f81-e6fb3f2ebe8b",
       "name": "Webhook",
       "webhookId": "fb1990d4-cb29-426e-bbfb-85aa7b3df7b1"
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\n  \"response\": \"={{$json.response}}\",\n  \"model\": \"={{$json.model}}\",\n  \"chatId\": \"={{$('Webhook').item.json.body.chatId}}\"\n}",
+        "responseBody": "={\n  \"response\": \"{{$json.response}}\",\n  \"model\": \"{{$json.model}}\",\n  \"chatId\": \"{{$('Webhook').item.json.body.chatId}}\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
@@ -30,7 +30,7 @@
         416,
         0
       ],
-      "id": "cba0dc34-a502-40e5-ae57-1edf587cb09d",
+      "id": "dc894d81-2c54-44a5-ac2d-505ddeef4940",
       "name": "Respond to Webhook"
     },
     {
@@ -48,7 +48,7 @@
         224,
         0
       ],
-      "id": "d8014eda-c737-48fe-857d-ce183ab38826",
+      "id": "50f13c14-bc7a-43d1-96ee-0462c43d4956",
       "name": "HTTP Request"
     }
   ],
@@ -81,10 +81,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "8a84dcde-7338-47d8-a568-6d5bfca30b14",
+  "versionId": "190a393e-057b-4690-8c86-1e3df70b314c",
   "meta": {
-    "instanceId": "75c3b491ccfa719fa5293192cbcc861c16720c27aa5226837c8096c379046a77"
+    "instanceId": "1849289ff8f4d899cbc164dab99ecaab0954991ff29781cefdf71d5364b64325"
   },
-  "id": "5mHtTExRMgMupjhR",
+  "id": "xJmZMEjlAttlzdQX",
   "tags": []
 }
