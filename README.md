@@ -174,6 +174,18 @@ docker-compose up -d
 ./scripts/setup-ollama.sh
 ```
 
+## 📋 Importing the n8n Workflow
+
+After starting the services:
+
+1. Open n8n at http://localhost:5678
+2. Click **"Workflows"** → **"Import from File"**  
+3. Select `n8n-workflow-chat.json` from the project root
+4. **Important**: Activate the workflow (toggle in top-right)
+5. Test the chat at http://localhost:3000
+
+The workflow connects: **Webhook → Ollama → Respond to Webhook**
+
 ## 🔗 Access Points
 
 Once running, access these services:
