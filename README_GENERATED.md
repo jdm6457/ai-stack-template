@@ -15,3 +15,9 @@ The following directories have been created:
 1. Start services: docker-compose up -d
 2. Setup models: ./scripts/setup-ollama.sh
 3. Access frontend: http://localhost:3000
+
+## IMPORTANT SECURITY NOTE (N8N Encryption)
+For production use, you MUST generate a unique, strong key and add it to your local .env file.
+If this key is not set, N8N will auto-generate a new one on every clean start, which can cause encrypted credentials (like API keys) to become unreadable.
+Add the following line to your .env:
+N8N_ENCRYPTION_KEY=<YOUR_GENERATED_KEY>

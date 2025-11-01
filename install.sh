@@ -61,6 +61,7 @@ check_docker_compose() {
 create_structure() {
     print_header "Creating Project Structure"
     
+    # Ensure n8n/workflows directory exists for the mount source
     mkdir -p {backend,frontend,n8n/workflows,scripts}
     print_status "Project directories created"
 }
@@ -132,7 +133,7 @@ app.get('/api/chats', async (req, res) => {
 
 // Create new chat session
 app.post('/api/chat', async (req, res) => {
-  const { message, model = 'phi3' } = req.body;
+  const { message, model = 'phi3:mini' } = req.body;
   
   if (!message) {
     return res.status(400).json({ error: 'Message is required' });
@@ -241,6 +242,11 @@ EOF
 FROM node:18-alpine
 
 WORKDIR /app
+
+# --- START FIX: Install curl and dependencies ---
+# 'apk add' is the package manager for Alpine Linux (used by node:18-alpine)
+RUN apk add --no-cache curl bash
+# --- END FIX ---
 
 COPY package*.json ./
 RUN npm install --production
@@ -378,7 +384,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('phi3');
+  const [selectedModel, setSelectedModel] = useState('phi3:mini');
   const [stockSymbol, setStockSymbol] = useState('AAPL');
   const [stockData, setStockData] = useState(null);
 
@@ -449,8 +455,8 @@ function App() {
                 value={selectedModel} 
                 onChange={(e) => setSelectedModel(e.target.value)}
               >
-                <option value="phi3">Phi-3 Mini</option>
-                <option value="llama2">Llama 2 7B</option>
+                <option value="phi3:mini">Phi-3 Mini</option>
+                <option value="llama2:7b">Llama 2 7B</option>
               </select>
             </label>
           </div>
@@ -929,7 +935,7 @@ setup_n8n() {
           "parameters": [
             {
               "name": "model",
-              "value": "={{ $json.body.model || 'phi3' }}"
+              "value": "={{ $json.body.model || 'phi3:mini' }}"
             },
             {
               "name": "prompt",
@@ -990,6 +996,8 @@ setup_n8n() {
   "id": 1
 }
 EOF
+
+    # chmod 777 n8n/workflows/chat-workflow.json
 
     print_status "n8n workflow created"
 }
@@ -1092,11 +1100,17 @@ create_env() {
     
     cat > .env << 'EOF'
 # N8N Configuration
-N8N_BASIC_AUTH_ACTIVE=false
+N8N_BASIC_AUTH_ACTIVE=true
+N8N_USER=admin@example.com
+N8N_PASS=ChangeMe!1
 N8N_HOST=0.0.0.0
 N8N_PORT=5678
 N8N_PROTOCOL=http
 WEBHOOK_URL=http://localhost:5678
+N8N_EXTERNAL_API_USERS_ALLOW_BASIC_AUTH=true
+N8N_FIRST_USER=admin@example.com
+N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
+N8N_RUNNERS_ENABLED=true
 
 # Database Configuration
 POSTGRES_DB=n8n
@@ -1142,6 +1156,12 @@ The following directories have been created:
 1. Start services: docker-compose up -d
 2. Setup models: ./scripts/setup-ollama.sh
 3. Access frontend: http://localhost:3000
+
+## IMPORTANT SECURITY NOTE (N8N Encryption)
+For production use, you MUST generate a unique, strong key and add it to your local .env file.
+If this key is not set, N8N will auto-generate a new one on every clean start, which can cause encrypted credentials (like API keys) to become unreadable.
+Add the following line to your .env:
+N8N_ENCRYPTION_KEY=<YOUR_GENERATED_KEY>
 EOF
 
     print_status "Documentation created"
