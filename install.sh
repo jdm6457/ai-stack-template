@@ -1003,6 +1003,7 @@ EOF
 }
 
 # Setup Ollama models script
+# Setup Ollama models script
 setup_ollama_script() {
     print_header "Creating Ollama Model Setup Script"
     
@@ -1019,6 +1020,16 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "${BLUE}🦙 Setting up Ollama models...${NC}"
+
+# Get the mode passed from quick-start.sh
+LLAMA2_MODE=$1
+
+# Function to print mode info only if non-interactive
+print_mode_info() {
+    if [ "$LLAMA2_MODE" != "INTERACTIVE" ]; then
+        echo -e "${BLUE}ℹ️ Running in automated $LLAMA2_MODE mode.${NC}"
+    fi
+}
 
 # Wait for Ollama to be ready
 echo -e "${YELLOW}⏳ Waiting for Ollama service to be ready...${NC}"
@@ -1060,17 +1071,28 @@ model_exists() {
     docker exec ollama ollama list | grep -q "$1" 2>/dev/null
 }
 
-# Pull Phi-3 Mini
+# Pull Phi-3 Mini (Required Base Model)
 if model_exists "phi3:mini"; then
     echo -e "${YELLOW}📦 Phi-3 Mini already exists, skipping download${NC}"
 else
     pull_model_with_progress "phi3:mini" "Phi-3 Mini"
 fi
 
-# Pull Llama 2 7B
+# --- Llama 2 Download Logic ---
 echo
-read -p "Do you want to download Llama 2 7B? (larger model, ~3.8GB) [y/N]: " -n 1 -r
+
+if [ "$LLAMA2_MODE" = "FULL_DOWNLOAD" ]; then
+    print_mode_info
+    REPLY="y"
+elif [ "$LLAMA2_MODE" = "SKIP_DOWNLOAD" ]; then
+    print_mode_info
+    REPLY="N"
+else
+    # INTERACTIVE MODE: Prompt the user
+    read -p "Do you want to download Llama 2 7B? (larger model, ~3.8GB) [y/N]: " -n 1 -r
+fi
 echo
+
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     if model_exists "llama2:7b"; then
         echo -e "${YELLOW}📦 Llama 2 7B already exists, skipping download${NC}"

@@ -22,9 +22,17 @@ A complete, **fully automated**, self-hosted AI development stack with Ollama, n
 
 ### ⚡ One-Command Automated Setup
 
+#### Options for AI Model Download:
+| Command | Result |
+| :--- | :--- |
+| **`./quick-start.sh -f`** | **Full Setup.** Automatically downloads both **Phi-3 Mini** (required) and **Llama 2 7B** (optional large model). |
+| **`./quick-start.sh -s`** | **Standard Setup.** Automatically downloads only the required **Phi-3 Mini** model. |
+| **`./quick-start.sh`** | **Interactive.** Prompts the user to choose Llama 2 download. |
+
 ```bash
 chmod +x quick-start.sh
-./quick-start.sh
+# Example recommended command:
+./quick-start.sh -s
 ```
 
 **That's it!** The script will:

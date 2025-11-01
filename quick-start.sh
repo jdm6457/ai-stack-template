@@ -13,6 +13,29 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+# --- 1. Command Line Option Parsing ---
+# Default mode is INTERACTIVE
+LLAMA2_MODE="INTERACTIVE"
+
+while getopts "fs" opt; do
+  case ${opt} in
+    f )
+      LLAMA2_MODE="FULL_DOWNLOAD"
+      echo "ℹ️ Running in automated FULL DOWNLOAD mode: Llama 2 7B will be downloaded."
+      ;;
+    s )
+      LLAMA2_MODE="SKIP_DOWNLOAD"
+      echo "ℹ️ Running in automated SKIP DOWNLOAD mode: Llama 2 7B download will be skipped."
+      ;;
+    \? )
+      echo "Usage: $0 [-f] (Full Download) or [-s] (Skip Download)"
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+# --------------------------------------
+
 # Function to wait for a service's health endpoint
 wait_for_service() {
     local service_name=$1
@@ -35,18 +58,16 @@ wait_for_service() {
 # --- Step 1: Setup ---
 echo -e "${GREEN}Step 1: Setting up project structure...${NC}"
 chmod +x install.sh
+# Pass the LLAMA2_MODE to install.sh in case it's needed for README, though not essential here.
 ./install.sh
 
 # --- Step 2: Start Services ---
 echo -e "\n${GREEN}Step 2: Starting Docker services...${NC}"
-# Use --build here to ensure the latest Dockerfile (with curl and permissions fix) is used
 docker-compose up -d --build
 
 # --- Step 3: Wait for Health ---
 echo -e "\n${GREEN}Step 3: Waiting for services to be ready...${NC}"
 echo "This may take 2-3 minutes for first run..."
-
-# Wait for services to be healthy (initial wait)
 sleep 30
 
 # Health checks for core services
@@ -90,7 +111,6 @@ if echo "$IMPORT_RESPONSE" | grep -q 'Successfully imported'; then
 elif echo "$IMPORT_RESPONSE" | grep -q 'already exists in the database'; then
     echo "⚠️ Workflow already exists. Proceeding with activation."
 else
-    # Output the full response and exit if the expected success/conflict strings are not found
     echo "$IMPORT_RESPONSE"
     echo -e "${RED}❌ FATAL ERROR: Workflow import failed (See message above). Aborting activation.${NC}"
     exit 1
@@ -103,7 +123,6 @@ echo -e "${BLUE}Retrieving Workflow ID via direct database query (psql)...${NC}"
 # Query the 'workflow_entity' table using the correct, case-sensitive column name.
 QUERY="SELECT id FROM public.workflow_entity WHERE name='AI Chat Workflow' ORDER BY \"createdAt\" DESC LIMIT 1;"
 
-# Execute the query inside the postgres container
 RETRIEVED_ID=$(docker exec postgres psql -U $N8N_DB_USER -d $N8N_DB_NAME -t -c "$QUERY" | tr -d '[:space:]')
 
 if [ -z "$RETRIEVED_ID" ]; then
@@ -132,7 +151,8 @@ echo -e "${GREEN}✅ Deployment complete! Workflow ID $RETRIEVED_ID is now activ
 
 # --- Step 4: Ollama Models ---
 echo -e "\n${GREEN}Step 4: Setting up AI models...${NC}"
-./scripts/setup-ollama.sh
+# PASS THE MODE TO THE SETUP SCRIPT
+./scripts/setup-ollama.sh "$LLAMA2_MODE"
 
 # --- Completion ---
 echo -e "\n${GREEN}🎉 Setup Complete!${NC}"
