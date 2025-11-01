@@ -143,11 +143,12 @@ coverage/
 # ===================
 # DEPLOYMENT ARTIFACTS
 # ===================
-# Generated project structure (created by install.sh)
+# Generated project structure & README_GENERATED.md (created by install.sh)
 backend/
 frontend/
 n8n/
 scripts/
+README_GENERATED.md
 
 # Environment and config files with secrets
 .env
