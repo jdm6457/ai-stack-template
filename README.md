@@ -37,6 +37,12 @@ chmod +x quick-start.sh
 
 **Total setup time:** 5-10 minutes (depending on internet speed for model downloads)
 
+⚠️ First-Time Access Note: The N8N dashboard requires a one-time account setup.
+
+The automated credentials (admin@example.com / ChangeMe!1) are not used for the first login.
+
+Recommendation: Use your real email address and create a unique, strong password for the Owner account when prompted at http://localhost:5678. The AI Chat Interface will operate immediately, even if the Owner account is not set up.
+
 ---
 
 ### 🔧 Manual Setup (Advanced)

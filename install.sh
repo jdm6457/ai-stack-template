@@ -1161,9 +1161,13 @@ ai-stack-template/
 ### If you ran `quick-start.sh`:
 ✅ Everything is already set up and running!
 - Frontend: http://localhost:3000
-- n8n: http://localhost:5678 (admin@example.com / ChangeMe!1)
-- Backend: http://localhost:3001
 - Ollama: http://localhost:11434
+
+**⚠️ N8N First-Time Login Required:**
+The n8n workflow is active, but you **must** set up the Owner Account on your first visit to the UI.
+- **Go to:** http://localhost:5678
+- **Recommendation:** Use your **real email address and a unique, strong password** when prompted. This account will become the permanent Owner.
+- **Note:** The AI Chat Interface at http://localhost:3000 will operate immediately, as the workflow is already running.
 
 ### If you ran manual setup:
 
@@ -1280,8 +1284,9 @@ Sample data is pre-populated for testing.
 
 **n8n Dashboard:**
 - URL: http://localhost:5678
-- Email: `admin@example.com`
-- Password: `ChangeMe!1`
+- **NOTE:** The credentials below are used for automation scripts and are overwritten by the first manual login.
+- Email (for automation only): `admin@example.com`
+- Password (for automation only): `ChangeMe!1`
 
 **PostgreSQL Databases:**
 - n8n DB: `n8n` / `n8n_password`
