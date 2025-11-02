@@ -20,6 +20,20 @@ A complete, **fully automated**, self-hosted AI development stack with Ollama, n
 - 10GB free disk space
 - Linux, macOS, or WSL2 (Windows)
 
+**💡 Not sure if you have everything?** Run the requirements checker:
+```bash
+chmod +x check-requirements.sh
+./check-requirements.sh
+```
+
+This will verify:
+- ✅ Docker installation and status
+- ✅ Docker Compose availability
+- ✅ System RAM (8GB+ recommended)
+- ✅ Available disk space (10GB+ needed)
+- ✅ Port availability (3000, 3001, 5678, 11434)
+- ✅ Required tools (curl)
+
 ### ⚡ One-Command Automated Setup
 
 #### Options for AI Model Download:
@@ -36,12 +50,14 @@ chmod +x quick-start.sh
 ```
 
 **That's it!** The script will:
-1. ✅ Generate all project files and directories
-2. ✅ Build and start all Docker containers
-3. ✅ Wait for services to be healthy
-4. ✅ **Automatically import and activate the n8n workflow**
-5. ✅ Download AI models (Phi-3 Mini required, Llama2 optional)
-6. ✅ Verify everything is working
+1. ✅ Automatically runs `check-requirements.sh` to verify your system meets all prerequisites
+2. ✅ If any requirements are missing, the script will provide installation instructions and exit safely
+3. ✅ Generate all project files and directories
+4. ✅ Build and start all Docker containers
+5. ✅ Wait for services to be healthy
+6. ✅ **Automatically import and activate the n8n workflow**
+7. ✅ Download AI models (Phi-3 Mini required, Llama2 optional)
+8. ✅ Verify everything is working
 
 **Total setup time:** 5-10 minutes (depending on internet speed for model downloads)
 
