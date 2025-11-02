@@ -99,7 +99,7 @@ Once deployment is complete:
 | Service | URL | Credentials |
 |---------|-----|-------------|
 | **💬 Chat Interface** | http://localhost:3000 | None (open access) |
-| **⚙️ n8n Workflows** | http://localhost:5678 | `admin@example.com` / `ChangeMe!1` |
+| **⚙️ n8n Workflows** | http://localhost:5678 | Setup required on first login |
 | **🔌 Backend API** | http://localhost:3001 | None (API endpoints) |
 | **🤖 Ollama API** | http://localhost:11434 | None (local access) |
 
@@ -216,8 +216,9 @@ Use the management script for common operations:
 ### Default Credentials
 
 **n8n Dashboard:**
-- Email: `admin@example.com`
-- Password: `ChangeMe!1`
+- Email: Configured at first login
+- Password: Configured at first login
+- NOTE: May skip all requests for additional information and license key is NOT required for community edition features
 
 **PostgreSQL Databases:**
 - n8n DB: `n8n` / `n8n_password`
