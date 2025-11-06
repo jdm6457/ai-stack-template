@@ -1,10 +1,36 @@
 #!/bin/bash
+#!/bin/bash
+
+# Ensure Unix line endings (fixes Windows CRLF issues)
+set -e
+
+# Convert line endings if running in WSL
+if grep -q -i microsoft /proc/version 2>/dev/null || grep -q -i wsl /proc/version 2>/dev/null; then
+    echo "🪟 WSL detected - ensuring proper line endings..."
+    # Try dos2unix first, fall back to sed
+    if command -v dos2unix &> /dev/null; then
+        dos2unix "$0" 2>/dev/null || true
+    else
+        sed -i 's/\r$//' "$0" 2>/dev/null || true
+    fi
+    echo "✅ Line endings fixed"
+fi
 
 # Quick start script - runs everything in sequence
 set -e
 
-echo "🚀 AI Stack Quick Start (Final Automated Deployment)"
+echo "🚀 AI Stack Quick Start (Automated Deployment)"
 echo "==================================================="
+
+# Run requirements check first
+if [ -f "check-requirements.sh" ]; then
+    echo -e "${BLUE}Running requirements check...${NC}"
+    if ! ./check-requirements.sh; then
+        echo -e "${RED}Requirements not met. Aborting.${NC}"
+        exit 1
+    fi
+    echo ""
+fi
 
 # Colors
 GREEN='\033[0;32m'
