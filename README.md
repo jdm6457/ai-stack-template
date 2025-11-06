@@ -20,6 +20,19 @@ A complete, **fully automated**, self-hosted AI development stack with Ollama, n
 - 10GB free disk space
 - Linux, macOS, or WSL2 (Windows)
 
+### 🌍 Cross-Platform Support
+
+This template works seamlessly across all major platforms:
+
+| Platform | Status | Notes |
+|----------|--------|-------|
+| **Linux** | ✅ Fully Supported | Ubuntu 20.04+, Debian, Fedora, etc. |
+| **macOS** | ✅ Fully Supported | Intel and Apple Silicon (M1/M2/M3) |
+| **Windows WSL2** | ✅ Fully Supported | Recommended for Windows users |
+| **Windows Git Bash** | ✅ Supported | Alternative to WSL2 |
+
+**Windows Users:** The setup script automatically detects your environment (WSL2 or Git Bash) and applies necessary compatibility fixes. No manual configuration needed!
+
 **💡 Not sure if you have everything?** Run the requirements checker:
 ```bash
 chmod +x check-requirements.sh
